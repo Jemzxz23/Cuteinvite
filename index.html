@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Monthsary | Nov 26 Flower Date Invite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-paper: #FAF5EE;
+      --bg-card: #FFFDF9;
+      --bg-blush: #F7EAE6;
+      --ink-primary: #3A252A;
+      --ink-secondary: #6E5058;
+      --ink-muted: #987B82;
+      --accent-rose: #D16075;
+      --accent-rose-deep: #B5475C;
+      --accent-rose-soft: #F2C9D0;
+      --accent-sage: #6C8B6E;
+      --accent-sage-soft: #DDE8DD;
+      --accent-gold: #D9A65B;
+      --border-hairline: rgba(110, 80, 88, 0.16);
+      --shadow-card: 0 22px 54px rgba(58, 37, 42, 0.10), 0 4px 14px rgba(58, 37, 42, 0.05);
+      --shadow-seal: 0 8px 20px rgba(181, 71, 92, 0.32), inset 0 2px 4px rgba(255, 255, 255, 0.35);
+      --radius-card: 24px;
+      --radius-pill: 999px;
+      --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --font-script: 'Pinyon Script', cursive;
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-paper);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 28px 18px 48px;
+      background-image:
+        radial-gradient(circle at 14% 18%, rgba(242, 201, 208, 0.34) 0%, transparent 42%),
+        radial-gradient(circle at 86% 82%, rgba(221, 232, 221, 0.42) 0%, transparent 44%),
+        radial-gradient(circle at 84% 14%, rgba(217, 166, 91, 0.14) 0%, transparent 32%);
+    }
+
+    /* Subtle cotton paper texture overlay */
+    .paper-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.24;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    }
+
+    /* Drifting petals and interactive blooms canvas */
+    #petal-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Top utility bar */
+    .top-bar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-hairline);
+      background: rgba(255, 253, 249, 0.88);
+      color: var(--ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .icon-btn:hover, .icon-btn:focus-visible {
+      border-color: var(--accent-rose);
+      color: var(--accent-rose-deep);
+      background: #FFFFFF;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    /* Main stage container */
+    .stage {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* =========================================
+       ACT 1: WAX-SEALED BOTANICAL ENVELOPE
+       ========================================= */
+    .envelope-view {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .envelope-view.is-hidden {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.96);
+      pointer-events: none;
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .envelope-kicker {
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-sage);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .envelope-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 6vw, 2.75rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--ink-primary);
+      margin-bottom: 8px;
+    }
+
+    .envelope-heading em {
+      font-style: italic;
+      color: var(--accent-rose-deep);
+    }
+
+    .envelope-sub {
+      font-size: 15px;
+      color: var(--ink-secondary);
+      margin-bottom: 28px;
+    }
+
+    .envelope-shell {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 4 / 2.85;
+      cursor: pointer;
+      perspective: 1000px;
+      border: none;
+      background: transparent;
+      padding: 0;
+    }
+
+    .envelope-shell:focus-visible {
+      outline: 2px solid var(--accent-rose);
+      outline-offset: 8px;
+      border-radius: 18px;
+    }
+
+    .envelope-body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: linear-gradient(160deg, #FFFDF9 0%, #F5EAE1 100%);
+      border: 1px solid rgba(110, 80, 88, 0.18);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .envelope-shell:hover .envelope-body {
+      transform: translateY(-4px);
+    }
+
+    /* Decorative envelope folds */
+    .envelope-pocket-left {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #FBF4EC 0%, #F2E4D9 100%);
+      clip-path: polygon(0 0, 52% 54%, 0 100%);
+      z-index: 2;
+    }
+
+    .envelope-pocket-right {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(225deg, #FBF4EC 0%, #EFE0D4 100%);
+      clip-path: polygon(100% 0, 48% 54%, 100% 100%);
+      z-index: 2;
+    }
+
+    .envelope-pocket-bottom {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, #FDF8F2 0%, #EFE1D6 100%);
+      clip-path: polygon(0 100%, 50% 46%, 100% 100%);
+      z-index: 3;
+      border-top: 1px solid rgba(110, 80, 88, 0.08);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: linear-gradient(180deg, #FFFDF9 0%, #F3E5DA 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.65s cubic-bezier(0.34, 1.2, 0.64, 1);
+      z-index: 4;
+      filter: drop-shadow(0 4px 8px rgba(58, 37, 42, 0.08));
+    }
+
+    .envelope-shell.is-opening .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    /* Mini letter peeking out */
+    .envelope-peek-card {
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: 14%;
+      height: 74%;
+      border-radius: 10px;
+      background: #FFFFFF;
+      border: 1px solid rgba(209, 96, 117, 0.22);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.18s;
+    }
+
+    .envelope-shell.is-opening .envelope-peek-card {
+      transform: translateY(-48%);
+    }
+
+    .peek-date {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--accent-rose-deep);
+    }
+
+    .peek-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    /* Wax seal */
+    .wax-seal {
+      position: absolute;
+      top: 52%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 32% 30%, #E37F92 0%, #C85268 58%, #A23B4F 100%);
+      box-shadow: var(--shadow-seal);
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      animation: sealPulse 2.8s ease-in-out infinite;
+    }
+
+    .wax-seal::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 245, 238, 0.45);
+    }
+
+    .envelope-shell.is-opening .wax-seal {
+      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0;
+    }
+
+    @keyframes sealPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.05); }
+    }
+
+    /* Sprigs peeking behind envelope */
+    .envelope-sprig {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .envelope-sprig.left {
+      left: -26px;
+      top: -18px;
+      width: 112px;
+      transform-origin: bottom right;
+      animation: gentleSway 5.5s ease-in-out infinite;
+    }
+
+    .envelope-sprig.right {
+      right: -24px;
+      bottom: -18px;
+      width: 116px;
+      transform-origin: top left;
+      animation: gentleSwayReverse 6.2s ease-in-out infinite;
+    }
+
+    .tap-hint {
+      margin-top: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-rose);
+      color: #FFFDF9;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(209, 96, 117, 0.25);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .tap-hint:hover, .tap-hint:focus-visible {
+      background: var(--accent-rose-deep);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    /* =========================================
+       ACT 2: LETTERPRESS FLOWER INVITATION CARD
+       ========================================= */
+    .invite-card {
+      position: relative;
+      width: 100%;
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      padding: 44px 36px 40px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(28px) scale(0.97);
+      pointer-events: none;
+      display: none;
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .invite-card.is-visible {
+      display: block;
+    }
+
+    .invite-card.is-entered {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* Inner letterpress border frame */
+    .invite-frame {
+      position: absolute;
+      inset: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(209, 96, 117, 0.22);
+      pointer-events: none;
+    }
+
+    /* Corner botanical accents */
+    .corner-floral {
+      position: absolute;
+      pointer-events: none;
+      width: 130px;
+      height: 130px;
+      z-index: 1;
+    }
+
+    .corner-floral.top-left {
+      top: -12px;
+      left: -12px;
+      transform-origin: top left;
+      animation: gentleSway 6.5s ease-in-out infinite;
+    }
+
+    .corner-floral.top-right {
+      top: -12px;
+      right: -12px;
+      transform: scaleX(-1);
+      transform-origin: center;
+      animation: gentleSwayMirror 7s ease-in-out infinite;
+    }
+
+    @keyframes gentleSway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3.2deg); }
+    }
+
+    @keyframes gentleSwayReverse {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-3.5deg); }
+    }
+
+    @keyframes gentleSwayMirror {
+      0%, 100% { transform: scaleX(-1) rotate(0deg); }
+      50% { transform: scaleX(-1) rotate(3deg); }
+    }
+
+    /* Centerpiece blooming SVG flower */
+    .hero-bloom-wrap {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .hero-bloom {
+      width: 96px;
+      height: 96px;
+      overflow: visible;
+    }
+
+    .hero-bloom .petal {
+      transform-origin: 50px 50px;
+      transform: scale(0.15) rotate(-14deg);
+      opacity: 0;
+    }
+
+    .invite-card.is-entered .hero-bloom .petal {
+      animation: bloomUnfurl 0.95s cubic-bezier(0.22, 1.2, 0.36, 1) forwards;
+      animation-delay: var(--d, 0.1s);
+    }
+
+    .hero-bloom .bloom-core {
+      transform-origin: 50px 50px;
+      transform: scale(0);
+    }
+
+    .invite-card.is-entered .hero-bloom .bloom-core {
+      animation: corePop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.55s forwards;
+    }
+
+    .hero-bloom .leaf-sway {
+      transform-origin: 50px 56px;
+      animation: leafBreathe 4.8s ease-in-out infinite;
+    }
+
+    @keyframes bloomUnfurl {
+      0% { transform: scale(0.15) rotate(-16deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes corePop {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes leafBreathe {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3.5deg); }
+    }
+
+    /* Card typography */
+    .invite-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+    }
+
+    .monthsary-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-sage-soft);
+      color: #466248;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .invite-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.15rem, 6.2vw, 3.1rem);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--ink-primary);
+      margin-bottom: 8px;
+    }
+
+    .invite-title .script-name {
+      display: block;
+      font-family: var(--font-script);
+      font-size: clamp(2.5rem, 7vw, 3.5rem);
+      font-weight: 400;
+      color: var(--accent-rose-deep);
+      line-height: 1.1;
+      margin-top: 2px;
+    }
+
+    .date-banner {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 18px auto 22px;
+      padding: 10px 22px;
+      border-top: 1px solid var(--border-hairline);
+      border-bottom: 1px solid var(--border-hairline);
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--ink-primary);
+    }
+
+    .date-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-rose);
+      flex-shrink: 0;
+    }
+
+    .love-note {
+      max-width: 440px;
+      margin: 0 auto 26px;
+      font-size: 15.5px;
+      line-height: 1.7;
+      color: var(--ink-secondary);
+    }
+
+    /* Date details strip */
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+
+    .detail-box {
+      background: var(--bg-paper);
+      border: 1px solid var(--border-hairline);
+      border-radius: 14px;
+      padding: 14px 16px;
+      transition: border-color 0.25s ease;
+    }
+
+    .detail-box:hover {
+      border-color: rgba(209, 96, 117, 0.36);
+    }
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-sage);
+      margin-bottom: 4px;
+    }
+
+    .detail-value {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--ink-primary);
+      line-height: 1.25;
+    }
+
+    /* Interactive bouquet garden strip inside card */
+    .garden-strip {
+      position: relative;
+      min-height: 54px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 6px;
+      margin: 0 auto 24px;
+      padding: 6px 10px 0;
+      border-bottom: 1px dashed rgba(108, 139, 110, 0.35);
+      overflow: hidden;
+    }
+
+    .mini-flower {
+      width: 34px;
+      height: 44px;
+      transform-origin: bottom center;
+      animation: growFlower 0.65s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
+    }
+
+    @keyframes growFlower {
+      0% { transform: scaleY(0.1) scaleX(0.5); opacity: 0; }
+      100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+    }
+
+    /* RSVP Section */
+    .rsvp-box {
+      background: var(--bg-blush);
+      border-radius: 18px;
+      padding: 22px 20px;
+      border: 1px solid rgba(209, 96, 117, 0.18);
+    }
+
+    .rsvp-question {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--ink-primary);
+      margin-bottom: 16px;
+    }
+
+    .rsvp-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .btn-yes {
+      padding: 13px 28px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: var(--accent-rose);
+      color: #FFFDF9;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(209, 96, 117, 0.28);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-yes:hover, .btn-yes:focus-visible {
+      background: var(--accent-rose-deep);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 26px rgba(181, 71, 92, 0.34);
+      outline: none;
+    }
+
+    .btn-shy {
+      padding: 12px 22px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(110, 80, 88, 0.24);
+      background: #FFFDF9;
+      color: var(--ink-secondary);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+    }
+
+    .btn-shy:hover, .btn-shy:focus-visible {
+      background: #FFFFFF;
+      border-color: var(--accent-rose);
+      outline: none;
+    }
+
+    /* Accepted celebration state */
+    .rsvp-confirmed {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeUp 0.55s ease forwards;
+    }
+
+    .rsvp-confirmed.is-active {
+      display: flex;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .confirmed-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: #FFFFFF;
+      color: var(--accent-rose-deep);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(209, 96, 117, 0.25);
+    }
+
+    .confirmed-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--ink-primary);
+    }
+
+    .confirmed-sub {
+      font-size: 14.5px;
+      color: var(--ink-secondary);
+      max-width: 360px;
+      line-height: 1.55;
+    }
+
+    .confirmed-tools {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn-subtle {
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(110, 80, 88, 0.22);
+      background: #FFFDF9;
+      color: var(--ink-primary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-subtle:hover, .btn-subtle:focus-visible {
+      border-color: var(--accent-rose);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .card-footer {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .signature {
+      font-family: var(--font-script);
+      font-size: 30px;
+      color: var(--accent-rose-deep);
+      line-height: 1.1;
+    }
+
+    .tap-garden-hint {
+      margin-top: 16px;
+      font-size: 12.5px;
+      color: var(--ink-muted);
+      text-align: center;
+    }
+
+    /* =========================================
+       PERSONALIZE MODAL
+       ========================================= */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(58, 37, 42, 0.42);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-backdrop.is-open {
+      display: flex;
+    }
+
+    .modal-panel {
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      padding: 24px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-hairline);
+      background: transparent;
+      color: var(--ink-secondary);
+      font-size: 18px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-paper);
+      color: var(--ink-primary);
+      font-family: var(--font-sans);
+      font-size: 14px;
+    }
+
+    .form-textarea {
+      min-height: 78px;
+      resize: vertical;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-rose);
+      background: #FFFFFF;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--ink-primary);
+      color: #FFFDF9;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 120;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .toast.is-shown {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 520px) {
+      body {
+        padding: 64px 14px 36px;
+      }
+
+      .invite-card {
+        padding: 36px 20px 30px;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .corner-floral {
+        width: 96px;
+        height: 96px;
+      }
+
+      .date-banner {
+        font-size: 17px;
+        padding: 9px 14px;
+        gap: 8px;
+      }
+
+      .envelope-sprig.left {
+        left: -14px;
+        width: 82px;
+      }
+
+      .envelope-sprig.right {
+        right: -14px;
+        width: 84px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+  <canvas id="petal-canvas" aria-hidden="true"></canvas>
+
+  <div class="top-bar">
+    <button type="button" class="icon-btn" id="btn-bloom-more" aria-label="Bloom a flower">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 7.5a4.5 4.5 0 1 1 4.5 4.5M12 7.5A4.5 4.5 0 1 0 7.5 12M12 7.5V9m-4.5 3a4.5 4.5 0 1 0 4.5 4.5M7.5 12H9m7.5 0a4.5 4.5 0 1 1-4.5 4.5m4.5-4.5H15m-3 4.5V15" />
+        <circle cx="12" cy="12" r="2.2" fill="currentColor" />
+      </svg>
+      <span>Bloom</span>
+    </button>
+    <button type="button" class="icon-btn" id="btn-customize" aria-label="Personalize invite">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 20h9" />
+        <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+      </svg>
+      <span>Personalize</span>
+    </button>
+  </div>
+
+  <main class="stage">
+    <!-- ACT 1: ENVELOPE -->
+    <section class="envelope-view" id="envelope-view" aria-label="Sealed monthsary invitation">
+      <p class="envelope-kicker">A Little Something For You</p>
+      <h1 class="envelope-heading">Happy Monthsary, <em id="env-recipient">My Love</em></h1>
+      <p class="envelope-sub">A special flower date awaits you on November 26.</p>
+
+      <button type="button" class="envelope-shell" id="envelope-trigger" aria-label="Open your November 26 flower date invitation">
+        <!-- Decorative botanical sprigs -->
+        <svg class="envelope-sprig left" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <path d="M98 104 C74 82, 54 58, 28 22" stroke="#6C8B6E" stroke-width="2.2" stroke-linecap="round" />
+          <ellipse cx="64" cy="70" rx="14" ry="7" transform="rotate(-38 64 70)" fill="#A9C2AA" />
+          <ellipse cx="48" cy="48" rx="13" ry="6.5" transform="rotate(-48 48 48)" fill="#8CAB8E" />
+          <ellipse cx="78" cy="58" rx="12" ry="6" transform="rotate(24 78 58)" fill="#C5D8C6" />
+          <circle cx="28" cy="24" r="10" fill="#F2C9D0" />
+          <circle cx="38" cy="20" r="8" fill="#E89FAD" />
+          <circle cx="24" cy="34" r="8" fill="#E89FAD" />
+          <circle cx="31" cy="27" r="4" fill="#D9A65B" />
+        </svg>
+
+        <svg class="envelope-sprig right" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <path d="M22 18 C46 42, 68 68, 94 100" stroke="#6C8B6E" stroke-width="2.2" stroke-linecap="round" />
+          <ellipse cx="56" cy="52" rx="14" ry="7" transform="rotate(35 56 52)" fill="#A9C2AA" />
+          <ellipse cx="72" cy="74" rx="13" ry="6.5" transform="rotate(42 72 74)" fill="#8CAB8E" />
+          <circle cx="92" cy="96" r="10" fill="#F2C9D0" />
+          <circle cx="82" cy="98" r="8" fill="#D16075" opacity="0.72" />
+          <circle cx="95" cy="86" r="7.5" fill="#E89FAD" />
+          <circle cx="89" cy="93" r="4" fill="#D9A65B" />
+        </svg>
+
+        <div class="envelope-body">
+          <div class="envelope-peek-card">
+            <span class="peek-label">Save the Date</span>
+            <span class="peek-date">November 26</span>
+          </div>
+          <div class="envelope-pocket-left"></div>
+          <div class="envelope-pocket-right"></div>
+          <div class="envelope-pocket-bottom"></div>
+          <div class="envelope-flap"></div>
+          <div class="wax-seal" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="10" r="4.6" fill="#FFF4EE" opacity="0.92" />
+              <circle cx="21.7" cy="14.2" r="4.6" fill="#FFF4EE" opacity="0.92" />
+              <circle cx="19.5" cy="20.8" r="4.6" fill="#FFF4EE" opacity="0.92" />
+              <circle cx="12.5" cy="20.8" r="4.6" fill="#FFF4EE" opacity="0.92" />
+              <circle cx="10.3" cy="14.2" r="4.6" fill="#FFF4EE" opacity="0.92" />
+              <circle cx="16" cy="16" r="3.4" fill="#D9A65B" />
+            </svg>
+          </div>
+        </div>
+      </button>
+
+      <button type="button" class="tap-hint" id="open-btn">
+        <span>Open Your Invite</span>
+      </button>
+    </section>
+
+    <!-- ACT 2: INVITATION CARD -->
+    <article class="invite-card" id="invite-card" aria-label="November 26 Monthsary Flower Date Invitation">
+      <div class="invite-frame" aria-hidden="true"></div>
+
+      <!-- Corner Botanical Illustrations -->
+      <svg class="corner-floral top-left" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+        <path d="M10 112 C28 76, 56 42, 108 16" stroke="#6C8B6E" stroke-width="2" stroke-linecap="round" />
+        <path d="M26 88 C42 74, 58 64, 78 60" stroke="#6C8B6E" stroke-width="1.5" stroke-linecap="round" />
+        <ellipse cx="48" cy="60" rx="15" ry="7" transform="rotate(-44 48 60)" fill="#B6CEB7" />
+        <ellipse cx="76" cy="36" rx="14" ry="6.5" transform="rotate(-32 76 36)" fill="#96B498" />
+        <ellipse cx="64" cy="66" rx="12" ry="5.5" transform="rotate(14 64 66)" fill="#C9DEC9" />
+        <circle cx="34" cy="34" r="14" fill="#F2C9D0" />
+        <circle cx="46" cy="28" r="10" fill="#E397A7" />
+        <circle cx="28" cy="46" r="10" fill="#E397A7" />
+        <circle cx="37" cy="36" r="5" fill="#D9A65B" />
+        <circle cx="96" cy="22" r="7" fill="#F2C9D0" />
+        <circle cx="96" cy="22" r="2.8" fill="#D9A65B" />
+      </svg>
+
+      <svg class="corner-floral top-right" viewBox="0 0 140 140" fill="none" aria-hidden="true">
+        <path d="M10 112 C28 76, 56 42, 108 16" stroke="#6C8B6E" stroke-width="2" stroke-linecap="round" />
+        <path d="M26 88 C42 74, 58 64, 78 60" stroke="#6C8B6E" stroke-width="1.5" stroke-linecap="round" />
+        <ellipse cx="48" cy="60" rx="15" ry="7" transform="rotate(-44 48 60)" fill="#B6CEB7" />
+        <ellipse cx="76" cy="36" rx="14" ry="6.5" transform="rotate(-32 76 36)" fill="#96B498" />
+        <ellipse cx="64" cy="66" rx="12" ry="5.5" transform="rotate(14 64 66)" fill="#C9DEC9" />
+        <circle cx="34" cy="34" r="14" fill="#F2C9D0" />
+        <circle cx="46" cy="28" r="10" fill="#E397A7" />
+        <circle cx="28" cy="46" r="10" fill="#E397A7" />
+        <circle cx="37" cy="36" r="5" fill="#D9A65B" />
+        <circle cx="96" cy="22" r="7" fill="#F2C9D0" />
+        <circle cx="96" cy="22" r="2.8" fill="#D9A65B" />
+      </svg>
+
+      <!-- Blooming Centerpiece Flower -->
+      <div class="hero-bloom-wrap">
+        <svg class="hero-bloom" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <!-- Leaves -->
+          <g class="leaf-sway">
+            <ellipse cx="26" cy="66" rx="17" ry="8" transform="rotate(-24 26 66)" fill="#93B295" />
+            <ellipse cx="74" cy="66" rx="17" ry="8" transform="rotate(24 74 66)" fill="#7FA081" />
+            <ellipse cx="50" cy="78" rx="14" ry="6.5" transform="rotate(90 50 78)" fill="#B6CEB7" />
+          </g>
+          <!-- Outer petals -->
+          <ellipse class="petal" style="--d: 0.08s" cx="50" cy="24" rx="13" ry="20" fill="#F4CCD3" />
+          <ellipse class="petal" style="--d: 0.14s" cx="74" cy="40" rx="13" ry="20" transform="rotate(60 74 40)" fill="#F0BDC7" />
+          <ellipse class="petal" style="--d: 0.20s" cx="72" cy="64" rx="13" ry="20" transform="rotate(120 72 64)" fill="#F4CCD3" />
+          <ellipse class="petal" style="--d: 0.26s" cx="50" cy="74" rx="13" ry="20" fill="#F0BDC7" />
+          <ellipse class="petal" style="--d: 0.32s" cx="28" cy="64" rx="13" ry="20" transform="rotate(-120 28 64)" fill="#F4CCD3" />
+          <ellipse class="petal" style="--d: 0.38s" cx="26" cy="40" rx="13" ry="20" transform="rotate(-60 26 40)" fill="#F0BDC7" />
+          <!-- Inner petals -->
+          <ellipse class="petal" style="--d: 0.42s" cx="50" cy="34" rx="10" ry="15" fill="#DF7A8E" />
+          <ellipse class="petal" style="--d: 0.46s" cx="65" cy="46" rx="10" ry="15" transform="rotate(72 65 46)" fill="#D4667B" />
+          <ellipse class="petal" style="--d: 0.50s" cx="59" cy="62" rx="10" ry="15" transform="rotate(144 59 62)" fill="#DF7A8E" />
+          <ellipse class="petal" style="--d: 0.54s" cx="41" cy="62" rx="10" ry="15" transform="rotate(-144 41 62)" fill="#D4667B" />
+          <ellipse class="petal" style="--d: 0.58s" cx="35" cy="46" rx="10" ry="15" transform="rotate(-72 35 46)" fill="#DF7A8E" />
+          <!-- Golden center -->
+          <g class="bloom-core">
+            <circle cx="50" cy="50" r="10.5" fill="#E3B469" />
+            <circle cx="47" cy="47" r="2.2" fill="#FFF7E8" />
+            <circle cx="53.5" cy="48" r="1.6" fill="#C2893B" />
+            <circle cx="50" cy="53.5" r="1.6" fill="#C2893B" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="invite-content">
+        <div class="monthsary-pill">Happy Monthsary</div>
+
+        <h1 class="invite-title">
+          Our Cute Flower Date
+          <span class="script-name" id="card-recipient">For My Favorite Person</span>
+        </h1>
+
+        <div class="date-banner">
+          <span>THURSDAY</span>
+          <span class="date-dot" aria-hidden="true"></span>
+          <span>NOV 26, 2026</span>
+        </div>
+
+        <p class="love-note" id="card-note">
+          Every month with you feels brighter, softer, and happier than the last. Let us celebrate our November 26 monthsary with pretty blooms, good food, and all my favorite moments with you.
+        </p>
+
+        <div class="details-grid">
+          <div class="detail-box">
+            <div class="detail-label">When</div>
+            <div class="detail-value" id="detail-time">Nov 26, 5:30 PM</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Where</div>
+            <div class="detail-value" id="detail-place">Our Cozy Flower Spot</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Date Vibe</div>
+            <div class="detail-value">Flowers, Coffee &amp; Us</div>
+          </div>
+          <div class="detail-box">
+            <div class="detail-label">Dress Code</div>
+            <div class="detail-value">Cute &amp; Comfy (You Always Glow)</div>
+          </div>
+        </div>
+
+        <!-- Mini interactive blooming garden -->
+        <div class="garden-strip" id="garden-strip" aria-label="Blooming bouquet"></div>
+
+        <!-- RSVP Section -->
+        <section class="rsvp-box" aria-label="Date RSVP">
+          <div id="rsvp-prompt">
+            <h2 class="rsvp-question">Will you be my Nov 26 date?</h2>
+            <div class="rsvp-actions">
+              <button type="button" class="btn-yes" id="btn-yes">Yes, I'd love to!</button>
+              <button type="button" class="btn-shy" id="btn-shy">Let me think...</button>
+            </div>
+          </div>
+
+          <div class="rsvp-confirmed" id="rsvp-confirmed" aria-live="polite">
+            <span class="confirmed-badge">Date Locked In</span>
+            <h2 class="confirmed-title">Yay! It's a Flower Date!</h2>
+            <p class="confirmed-sub" id="confirmed-sub">
+              I cannot wait to see your smile on November 26. Fresh flowers and lots of hugs are already reserved for you.
+            </p>
+            <div class="confirmed-tools">
+              <button type="button" class="btn-subtle" id="btn-bouquet-burst">Bloom More Flowers</button>
+              <button type="button" class="btn-subtle" id="btn-replay">Replay Envelope</button>
+            </div>
+          </div>
+        </section>
+
+        <footer class="card-footer">
+          <span>Forever excited to date you,</span>
+          <span class="signature" id="card-sender">Your Boyfriend</span>
+        </footer>
+      </div>
+    </article>
+
+    <p class="tap-garden-hint" id="tap-hint" style="display: none;">
+      Tip: Tap anywhere around the page to plant blooming flowers.
+    </p>
+  </main>
+
+  <!-- PERSONALIZE MODAL -->
+  <div class="modal-backdrop" id="customize-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Personalize Invite</h2>
+        <button type="button" class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <form id="customize-form">
+        <div class="form-group">
+          <label class="form-label" for="input-to">Her Name / Pet Name</label>
+          <input class="form-input" id="input-to" type="text" placeholder="e.g. Baby, My Love, Bea" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-from">Your Name</label>
+          <input class="form-input" id="input-from" type="text" placeholder="e.g. Your Boyfriend" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-time">Time on Nov 26</label>
+          <input class="form-input" id="input-time" type="text" placeholder="e.g. Nov 26, 5:30 PM" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-place">Location / Plan</label>
+          <input class="form-input" id="input-place" type="text" placeholder="e.g. Flower Cafe &amp; Dinner" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-note">Love Note</label>
+          <textarea class="form-textarea" id="input-note"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn-yes" style="padding: 10px 20px; font-size: 14px;">Save Changes</button>
+          <button type="button" class="btn-subtle" id="btn-copy-link">Copy Shareable Link</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // =====================================================
+      // STATE & URL PERSONALIZATION
+      // =====================================================
+      const defaults = {
+        to: 'My Love',
+        from: 'Your Boyfriend',
+        time: 'Nov 26, 5:30 PM',
+        place: 'Our Cozy Flower Spot',
+        note: 'Every month with you feels brighter, softer, and happier than the last. Let us celebrate our November 26 monthsary with pretty blooms, good food, and all my favorite moments with you.'
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const state = {
+        to: params.get('to') || defaults.to,
+        from: params.get('from') || defaults.from,
+        time: params.get('time') || defaults.time,
+        place: params.get('place') || defaults.place,
+        note: params.get('note') || defaults.note,
+        opened: false,
+        accepted: false,
+        shyCount: 0
+      };
+
+      // DOM refs
+      const envelopeView = document.getElementById('envelope-view');
+      const envelopeTrigger = document.getElementById('envelope-trigger');
+      const openBtn = document.getElementById('open-btn');
+      const inviteCard = document.getElementById('invite-card');
+      const tapHint = document.getElementById('tap-hint');
+      const gardenStrip = document.getElementById('garden-strip');
+      const rsvpPrompt = document.getElementById('rsvp-prompt');
+      const rsvpConfirmed = document.getElementById('rsvp-confirmed');
+      const btnYes = document.getElementById('btn-yes');
+      const btnShy = document.getElementById('btn-shy');
+      const btnBouquetBurst = document.getElementById('btn-bouquet-burst');
+      const btnReplay = document.getElementById('btn-replay');
+      const btnBloomMore = document.getElementById('btn-bloom-more');
+      const btnCustomize = document.getElementById('btn-customize');
+      const customizeModal = document.getElementById('customize-modal');
+      const modalClose = document.getElementById('modal-close');
+      const customizeForm = document.getElementById('customize-form');
+      const btnCopyLink = document.getElementById('btn-copy-link');
+      const toastEl = document.getElementById('toast');
+
+      function applyPersonalization() {
+        document.getElementById('env-recipient').textContent = state.to;
+        document.getElementById('card-recipient').textContent = 'For ' + state.to;
+        document.getElementById('card-sender').textContent = state.from;
+        document.getElementById('detail-time').textContent = state.time;
+        document.getElementById('detail-place').textContent = state.place;
+        document.getElementById('card-note').textContent = state.note;
+
+        document.getElementById('input-to').value = state.to;
+        document.getElementById('input-from').value = state.from;
+        document.getElementById('input-time').value = state.time;
+        document.getElementById('input-place').value = state.place;
+        document.getElementById('input-note').value = state.note;
+      }
+
+      function showToast(message) {
+        toastEl.textContent = message;
+        toastEl.classList.add('is-shown');
+        window.clearTimeout(showToast._timer);
+        showToast._timer = window.setTimeout(function () {
+          toastEl.classList.remove('is-shown');
+        }, 2600);
+      }
+
+      applyPersonalization();
+
+      // =====================================================
+      // CANVAS: DRIFTING PETALS + CLICK-TO-BLOOM FLOWERS
+      // =====================================================
+      const canvas = document.getElementById('petal-canvas');
+      const ctx = canvas.getContext('2d');
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      const petalColors = ['#F2C9D0', '#E8A5B3', '#F7DCE0', '#D97C8E', '#F9E6C8'];
+      const bloomPalettes = [
+        { petal: '#E89FAD', inner: '#D16075', core: '#E3B469' },
+        { petal: '#F4CCD3', inner: '#DF7A8E', core: '#E3B469' },
+        { petal: '#F6DEC1', inner: '#E7A977', core: '#B55B4A' },
+        { petal: '#EAD4E6', inner: '#C58BB8', core: '#E3B469' }
+      ];
+
+      const petals = [];
+      const canvasBlooms = [];
+
+      function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function createPetal(fromTop) {
+        return {
+          x: Math.random() * width,
+          y: fromTop ? -20 - Math.random() * 140 : Math.random() * height,
+          size: 5 + Math.random() * 7,
+          speedY: 0.45 + Math.random() * 0.75,
+          speedX: (Math.random() - 0.5) * 0.45,
+          swayAmp: 0.35 + Math.random() * 0.65,
+          swayFreq: 0.012 + Math.random() * 0.016,
+          phase: Math.random() * Math.PI * 2,
+          rot: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.025,
+          opacity: 0.45 + Math.random() * 0.42,
+          color: petalColors[Math.floor(Math.random() * petalColors.length)]
+        };
+      }
+
+      function spawnPetalBurst(originX, originY, count) {
+        for (let i = 0; i < count; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1.6 + Math.random() * 4.2;
+          petals.push({
+            x: originX,
+            y: originY,
+            size: 6 + Math.random() * 7,
+            speedY: Math.sin(angle) * speed - 1.2,
+            speedX: Math.cos(angle) * speed,
+            gravity: 0.045,
+            burst: true,
+            swayAmp: 0.25,
+            swayFreq: 0.02,
+            phase: Math.random() * Math.PI * 2,
+            rot: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.08,
+            opacity: 0.92,
+            life: 1,
+            color: petalColors[Math.floor(Math.random() * petalColors.length)]
+          });
+        }
+      }
+
+      function plantCanvasBloom(x, y) {
+        const pal = bloomPalettes[Math.floor(Math.random() * bloomPalettes.length)];
+        canvasBlooms.push({
+          x: x,
+          y: y,
+          scale: 0.05,
+          targetScale: 0.75 + Math.random() * 0.5,
+          petalCount: 5 + Math.floor(Math.random() * 2),
+          rot: Math.random() * Math.PI * 2,
+          alpha: 0.95,
+          age: 0,
+          palette: pal
+        });
+        if (canvasBlooms.length > 26) {
+          canvasBlooms.shift();
+        }
+      }
+
+      function drawPetalShape(p) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(0, p.opacity);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.moveTo(0, -p.size);
+        ctx.bezierCurveTo(p.size * 0.85, -p.size * 0.65, p.size * 0.75, p.size * 0.65, 0, p.size);
+        ctx.bezierCurveTo(-p.size * 0.75, p.size * 0.65, -p.size * 0.85, -p.size * 0.65, 0, -p.size);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawCanvasBloom(b) {
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.rotate(b.rot);
+        ctx.scale(b.scale, b.scale);
+        ctx.globalAlpha = Math.max(0, b.alpha);
+
+        // Outer petals
+        for (let i = 0; i < b.petalCount; i++) {
+          ctx.save();
+          ctx.rotate((Math.PI * 2 / b.petalCount) * i);
+          ctx.fillStyle = b.palette.petal;
+          ctx.beginPath();
+          ctx.ellipse(0, -13, 7.5, 12, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = b.palette.inner;
+          ctx.beginPath();
+          ctx.ellipse(0, -9, 4.2, 7, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        // Core
+        ctx.fillStyle = b.palette.core;
+        ctx.beginPath();
+        ctx.arc(0, 0, 5.2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const initialPetalCount = width < 520 ? 16 : 26;
+      for (let i = 0; i < initialPetalCount; i++) {
+        petals.push(createPetal(false));
+      }
+
+      let frameTick = 0;
+      function animateCanvas() {
+        frameTick++;
+        ctx.clearRect(0, 0, width, height);
+
+        // Update and draw planted blooms
+        for (let i = canvasBlooms.length - 1; i >= 0; i--) {
+          const b = canvasBlooms[i];
+          b.age++;
+          b.scale += (b.targetScale - b.scale) * 0.12;
+          b.rot += 0.002;
+          if (b.age > 260) {
+            b.alpha -= 0.008;
+          }
+          if (b.alpha <= 0) {
+            canvasBlooms.splice(i, 1);
+            continue;
+          }
+          drawCanvasBloom(b);
+        }
+
+        // Update and draw petals
+        for (let i = petals.length - 1; i >= 0; i--) {
+          const p = petals[i];
+          if (p.burst) {
+            p.speedY += p.gravity;
+            p.speedX *= 0.985;
+            p.x += p.speedX;
+            p.y += p.speedY;
+            p.rot += p.rotSpeed;
+            p.life -= 0.011;
+            p.opacity = p.life;
+            if (p.life <= 0 || p.y > height + 30) {
+              petals.splice(i, 1);
+              continue;
+            }
+          } else {
+            p.y += p.speedY;
+            p.x += p.speedX + Math.sin(frameTick * p.swayFreq + p.phase) * p.swayAmp;
+            p.rot += p.rotSpeed;
+            if (p.y > height + 24) {
+              p.y = -18;
+              p.x = Math.random() * width;
+            }
+            if (p.x < -24) p.x = width + 20;
+            if (p.x > width + 24) p.x = -20;
+          }
+          drawPetalShape(p);
+        }
+
+        window.requestAnimationFrame(animateCanvas);
+      }
+
+      window.requestAnimationFrame(animateCanvas);
+
+      // =====================================================
+      // MINI BOUQUET STRIP INSIDE CARD
+      // =====================================================
+      const miniColors = [
+        ['#F2C9D0', '#D16075'],
+        ['#F7DCE0', '#E08396'],
+        ['#F6DEC1', '#E3A16B'],
+        ['#EAD4E6', '#BF83B2']
+      ];
+
+      function addMiniFlower() {
+        const pair = miniColors[Math.floor(Math.random() * miniColors.length)];
+        const heightOffset = 36 + Math.floor(Math.random() * 14);
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 36 48');
+        svg.setAttribute('class', 'mini-flower');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.style.height = heightOffset + 'px';
+        svg.innerHTML =
+          '<path d="M18 46 Q17 34 18 20" stroke="#6C8B6E" stroke-width="2" stroke-linecap="round" fill="none"/>' +
+          '<ellipse cx="13" cy="34" rx="5" ry="2.4" transform="rotate(-28 13 34)" fill="#96B498"/>' +
+          '<ellipse cx="23" cy="31" rx="5" ry="2.4" transform="rotate(28 23 31)" fill="#A9C2AA"/>' +
+          '<circle cx="18" cy="12" r="5" fill="' + pair[0] + '"/>' +
+          '<circle cx="24" cy="16" r="5" fill="' + pair[1] + '" opacity="0.88"/>' +
+          '<circle cx="22" cy="22" r="5" fill="' + pair[0] + '"/>' +
+          '<circle cx="14" cy="22" r="5" fill="' + pair[1] + '" opacity="0.88"/>' +
+          '<circle cx="12" cy="16" r="5" fill="' + pair[0] + '"/>' +
+          '<circle cx="18" cy="17.5" r="3.4" fill="#E3B469"/>';
+
+        if (gardenStrip.children.length >= 11) {
+          gardenStrip.removeChild(gardenStrip.firstElementChild);
+        }
+        gardenStrip.appendChild(svg);
+      }
+
+      function seedInitialBouquet() {
+        gardenStrip.innerHTML = '';
+        for (let i = 0; i < 6; i++) {
+          window.setTimeout(addMiniFlower, i * 110);
+        }
+      }
+
+      // =====================================================
+      // ENVELOPE OPEN & REPLAY FLOW
+      // =====================================================
+      function openInvitation() {
+        if (state.opened) return;
+        state.opened = true;
+        envelopeTrigger.classList.add('is-opening');
+
+        const rect = envelopeTrigger.getBoundingClientRect();
+        spawnPetalBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 28);
+
+        window.setTimeout(function () {
+          envelopeView.classList.add('is-hidden');
+          inviteCard.classList.add('is-visible');
+          tapHint.style.display = 'block';
+
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+              inviteCard.classList.add('is-entered');
+              seedInitialBouquet();
+            });
+          });
+        }, 560);
+      }
+
+      function replayEnvelope() {
+        state.opened = false;
+        inviteCard.classList.remove('is-entered');
+        window.setTimeout(function () {
+          inviteCard.classList.remove('is-visible');
+          tapHint.style.display = 'none';
+          envelopeTrigger.classList.remove('is-opening');
+          envelopeView.classList.remove('is-hidden');
+        }, 320);
+      }
+
+      envelopeTrigger.addEventListener('click', openInvitation);
+      openBtn.addEventListener('click', openInvitation);
+      btnReplay.addEventListener('click', replayEnvelope);
+
+      // =====================================================
+      // CUTE INTERACTIVE RSVP
+      // =====================================================
+      const shyLabels = [
+        'Pretty please?',
+        'There will be flowers!',
+        'And sweet treats too!',
+        'You know you want to...',
+        'Okay fine, YES!'
+      ];
+
+      function confirmDate() {
+        state.accepted = true;
+        rsvpPrompt.style.display = 'none';
+        rsvpConfirmed.classList.add('is-active');
+
+        const rect = inviteCard.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = Math.min(rect.top + rect.height * 0.55, height * 0.6);
+        spawnPetalBurst(cx, cy, 46);
+
+        for (let i = 0; i < 5; i++) {
+          window.setTimeout(function () {
+            addMiniFlower();
+            plantCanvasBloom(
+              40 + Math.random() * (width - 80),
+              60 + Math.random() * (height - 120)
+            );
+          }, i * 120);
+        }
+      }
+
+      btnYes.addEventListener('click', confirmDate);
+
+      btnShy.addEventListener('click', function () {
+        if (state.shyCount >= shyLabels.length - 1) {
+          confirmDate();
+          return;
+        }
+        btnShy.textContent = shyLabels[state.shyCount];
+        state.shyCount++;
+
+        // Playful tiny wiggle that stays strictly inside the card
+        const shiftX = (state.shyCount % 2 === 0 ? -1 : 1) * 14;
+        btnShy.style.transform = 'translateX(' + shiftX + 'px)';
+        btnYes.style.transform = 'scale(' + (1 + state.shyCount * 0.04) + ')';
+        window.setTimeout(function () {
+          btnShy.style.transform = 'translateX(0)';
+        }, 260);
+      });
+
+      btnBouquetBurst.addEventListener('click', function () {
+        addMiniFlower();
+        spawnPetalBurst(width / 2, height * 0.45, 22);
+        plantCanvasBloom(
+          50 + Math.random() * (width - 100),
+          70 + Math.random() * (height - 140)
+        );
+      });
+
+      btnBloomMore.addEventListener('click', function () {
+        plantCanvasBloom(
+          60 + Math.random() * (width - 120),
+          80 + Math.random() * (height - 160)
+        );
+        spawnPetalBurst(width / 2, 120, 14);
+        if (state.opened) {
+          addMiniFlower();
+        }
+      });
+
+      // Tap anywhere on empty background to plant a blooming flower
+      document.addEventListener('click', function (event) {
+        if (event.target.closest('button, input, textarea, .modal-panel, .envelope-shell')) {
+          return;
+        }
+        plantCanvasBloom(event.clientX, event.clientY);
+        spawnPetalBurst(event.clientX, event.clientY, 6);
+      });
+
+      // =====================================================
+      // PERSONALIZE MODAL
+      // =====================================================
+      function openModal() {
+        customizeModal.classList.add('is-open');
+      }
+
+      function closeModal() {
+        customizeModal.classList.remove('is-open');
+      }
+
+      btnCustomize.addEventListener('click', openModal);
+      modalClose.addEventListener('click', closeModal);
+      customizeModal.addEventListener('click', function (event) {
+        if (event.target === customizeModal) {
+          closeModal();
+        }
+      });
+
+      customizeForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        state.to = document.getElementById('input-to').value.trim() || defaults.to;
+        state.from = document.getElementById('input-from').value.trim() || defaults.from;
+        state.time = document.getElementById('input-time').value.trim() || defaults.time;
+        state.place = document.getElementById('input-place').value.trim() || defaults.place;
+        state.note = document.getElementById('input-note').value.trim() || defaults.note;
+        applyPersonalization();
+        closeModal();
+        showToast('Invite updated!');
+      });
+
+      btnCopyLink.addEventListener('click', function () {
+        const nextUrl = new URL(window.location.href);
+        nextUrl.searchParams.set('to', document.getElementById('input-to').value.trim() || defaults.to);
+        nextUrl.searchParams.set('from', document.getElementById('input-from').value.trim() || defaults.from);
+        nextUrl.searchParams.set('time', document.getElementById('input-time').value.trim() || defaults.time);
+        nextUrl.searchParams.set('place', document.getElementById('input-place').value.trim() || defaults.place);
+        nextUrl.searchParams.set('note', document.getElementById('input-note').value.trim() || defaults.note);
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(nextUrl.toString()).then(function () {
+            showToast('Shareable link copied!');
+          }).catch(function () {
+            showToast('Link ready in address bar');
+            window.history.replaceState({}, '', nextUrl.toString());
+          });
+        } else {
+          window.history.replaceState({}, '', nextUrl.toString());
+          showToast('Link updated in address bar!');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
