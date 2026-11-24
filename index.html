@@ -45,6 +45,13 @@
       color: var(--ink-primary);
       font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    input, textarea {
+      user-select: text;
+      -webkit-user-select: text;
     }
 
     body {
@@ -71,14 +78,14 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
     }
 
-    /* Drifting petals and interactive blooms canvas */
+    /* Drifting petals, blooms, and cute flower mouse trail canvas */
     #petal-canvas {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 2;
+      z-index: 30;
     }
 
     /* Top utility bar */
@@ -999,7 +1006,7 @@
     <section class="envelope-view" id="envelope-view" aria-label="Sealed monthsary invitation">
       <p class="envelope-kicker">A Little Something For You</p>
       <h1 class="envelope-heading">Happy Monthsary, <em id="env-recipient">My Love</em></h1>
-      <p class="envelope-sub">A special flower date awaits you on November 26.</p>
+      <p class="envelope-sub">A special flower date awaits you on <span id="env-date">November 26</span>.</p>
 
       <button type="button" class="envelope-shell" id="envelope-trigger" aria-label="Open your November 26 flower date invitation">
         <!-- Decorative botanical sprigs -->
@@ -1027,7 +1034,7 @@
         <div class="envelope-body">
           <div class="envelope-peek-card">
             <span class="peek-label">Save the Date</span>
-            <span class="peek-date">November 26</span>
+            <span class="peek-date" id="peek-date">November 26</span>
           </div>
           <div class="envelope-pocket-left"></div>
           <div class="envelope-pocket-right"></div>
@@ -1124,10 +1131,10 @@
           <span class="script-name" id="card-recipient">For My Favorite Person</span>
         </h1>
 
-        <div class="date-banner">
-          <span>THURSDAY</span>
+        <div class="date-banner" id="date-banner" title="Click to customize date" style="cursor: pointer;">
+          <span id="banner-weekday">THURSDAY</span>
           <span class="date-dot" aria-hidden="true"></span>
-          <span>NOV 26, 2026</span>
+          <span id="banner-date">NOV 26, 2026</span>
         </div>
 
         <p class="love-note" id="card-note">
@@ -1159,7 +1166,7 @@
         <!-- RSVP Section -->
         <section class="rsvp-box" aria-label="Date RSVP">
           <div id="rsvp-prompt">
-            <h2 class="rsvp-question">Will you be my Nov 26 date?</h2>
+            <h2 class="rsvp-question">Will you be my <span id="rsvp-date">Nov 26</span> date?</h2>
             <div class="rsvp-actions">
               <button type="button" class="btn-yes" id="btn-yes">Yes, I'd love to!</button>
               <button type="button" class="btn-shy" id="btn-shy">Let me think...</button>
@@ -1170,7 +1177,7 @@
             <span class="confirmed-badge">Date Locked In</span>
             <h2 class="confirmed-title">Yay! It's a Flower Date!</h2>
             <p class="confirmed-sub" id="confirmed-sub">
-              I cannot wait to see your smile on November 26. Fresh flowers and lots of hugs are already reserved for you.
+              I cannot wait to see your smile on <span id="confirmed-date">November 26</span>. Fresh flowers and lots of hugs are already reserved for you.
             </p>
             <div class="confirmed-tools">
               <button type="button" class="btn-subtle" id="btn-bouquet-burst">Bloom More Flowers</button>
@@ -1208,7 +1215,11 @@
           <input class="form-input" id="input-from" type="text" placeholder="e.g. Your Boyfriend" />
         </div>
         <div class="form-group">
-          <label class="form-label" for="input-time">Time on Nov 26</label>
+          <label class="form-label" for="input-date">Date</label>
+          <input class="form-input" id="input-date" type="date" value="2026-11-26" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-time">Time / Schedule</label>
           <input class="form-input" id="input-time" type="text" placeholder="e.g. Nov 26, 5:30 PM" />
         </div>
         <div class="form-group">
@@ -1239,15 +1250,17 @@
       const defaults = {
         to: 'My Love',
         from: 'Your Boyfriend',
+        date: '2026-11-26',
         time: 'Nov 26, 5:30 PM',
         place: 'Our Cozy Flower Spot',
-        note: 'Every month with you feels brighter, softer, and happier than the last. Let us celebrate our November 26 monthsary with pretty blooms, good food, and all my favorite moments with you.'
+        note: 'Every month with you feels brighter, softer, and happier than the last. Let us celebrate our monthsary with pretty blooms, good food, and all my favorite moments with you.'
       };
 
       const params = new URLSearchParams(window.location.search);
       const state = {
         to: params.get('to') || defaults.to,
         from: params.get('from') || defaults.from,
+        date: params.get('date') || defaults.date,
         time: params.get('time') || defaults.time,
         place: params.get('place') || defaults.place,
         note: params.get('note') || defaults.note,
@@ -1256,11 +1269,32 @@
         shyCount: 0
       };
 
+      const WEEKDAYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+      const MONTHS_SHORT = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+      const MONTHS_TITLE = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+      function formatDateParts(isoDate) {
+        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(isoDate || '').trim());
+        const year = match ? parseInt(match[1], 10) : 2026;
+        const monthIdx = match ? Math.max(0, Math.min(11, parseInt(match[2], 10) - 1)) : 10;
+        const day = match ? Math.max(1, Math.min(31, parseInt(match[3], 10))) : 26;
+        const dt = new Date(year, monthIdx, day);
+        return {
+          iso: year + '-' + String(monthIdx + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0'),
+          weekday: WEEKDAYS[dt.getDay()],
+          shortFull: MONTHS_SHORT[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear(),
+          shortMonthDay: MONTHS_TITLE[dt.getMonth()] + ' ' + dt.getDate(),
+          longMonthDay: MONTHS_LONG[dt.getMonth()] + ' ' + dt.getDate()
+        };
+      }
+
       // DOM refs
       const envelopeView = document.getElementById('envelope-view');
       const envelopeTrigger = document.getElementById('envelope-trigger');
       const openBtn = document.getElementById('open-btn');
       const inviteCard = document.getElementById('invite-card');
+      const dateBanner = document.getElementById('date-banner');
       const tapHint = document.getElementById('tap-hint');
       const gardenStrip = document.getElementById('garden-strip');
       const rsvpPrompt = document.getElementById('rsvp-prompt');
@@ -1278,8 +1312,18 @@
       const toastEl = document.getElementById('toast');
 
       function applyPersonalization() {
+        const d = formatDateParts(state.date);
+        state.date = d.iso;
+
+        document.title = 'Happy Monthsary | ' + d.shortMonthDay + ' Flower Date Invite';
         document.getElementById('env-recipient').textContent = state.to;
+        document.getElementById('env-date').textContent = d.longMonthDay;
+        document.getElementById('peek-date').textContent = d.longMonthDay;
         document.getElementById('card-recipient').textContent = 'For ' + state.to;
+        document.getElementById('banner-weekday').textContent = d.weekday;
+        document.getElementById('banner-date').textContent = d.shortFull;
+        document.getElementById('rsvp-date').textContent = d.shortMonthDay;
+        document.getElementById('confirmed-date').textContent = d.longMonthDay;
         document.getElementById('card-sender').textContent = state.from;
         document.getElementById('detail-time').textContent = state.time;
         document.getElementById('detail-place').textContent = state.place;
@@ -1287,6 +1331,7 @@
 
         document.getElementById('input-to').value = state.to;
         document.getElementById('input-from').value = state.from;
+        document.getElementById('input-date').value = state.date;
         document.getElementById('input-time').value = state.time;
         document.getElementById('input-place').value = state.place;
         document.getElementById('input-note').value = state.note;
@@ -1322,6 +1367,30 @@
 
       const petals = [];
       const canvasBlooms = [];
+      const trailBlooms = [];
+      let lastTrailX = -999;
+      let lastTrailY = -999;
+
+      function spawnTrailFlower(x, y) {
+        const pal = bloomPalettes[Math.floor(Math.random() * bloomPalettes.length)];
+        trailBlooms.push({
+          x: x + (Math.random() - 0.5) * 6,
+          y: y + (Math.random() - 0.5) * 6,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: -0.35 - Math.random() * 0.35,
+          scale: 0.12,
+          targetScale: 0.34 + Math.random() * 0.22,
+          petalCount: 5,
+          rot: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.05,
+          alpha: 0.9,
+          life: 1,
+          palette: pal
+        });
+        if (trailBlooms.length > 36) {
+          trailBlooms.shift();
+        }
+      }
 
       function resizeCanvas() {
         width = window.innerWidth;
@@ -1464,6 +1533,22 @@
             continue;
           }
           drawCanvasBloom(b);
+        }
+
+        // Update and draw mouse flower trail
+        for (let i = trailBlooms.length - 1; i >= 0; i--) {
+          const t = trailBlooms[i];
+          t.x += t.vx;
+          t.y += t.vy;
+          t.rot += t.rotSpeed;
+          t.scale += (t.targetScale - t.scale) * 0.18;
+          t.life -= 0.022;
+          t.alpha = Math.max(0, t.life);
+          if (t.life <= 0) {
+            trailBlooms.splice(i, 1);
+            continue;
+          }
+          drawCanvasBloom(t);
         }
 
         // Update and draw petals
@@ -1654,9 +1739,21 @@
         }
       });
 
+      // Cute flower mouse trail on pointer move
+      const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.addEventListener('pointermove', function (event) {
+        if (prefersReducedMotion) return;
+        const dx = event.clientX - lastTrailX;
+        const dy = event.clientY - lastTrailY;
+        if (dx * dx + dy * dy < 680) return;
+        lastTrailX = event.clientX;
+        lastTrailY = event.clientY;
+        spawnTrailFlower(event.clientX, event.clientY);
+      }, { passive: true });
+
       // Tap anywhere on empty background to plant a blooming flower
       document.addEventListener('click', function (event) {
-        if (event.target.closest('button, input, textarea, .modal-panel, .envelope-shell')) {
+        if (event.target.closest('button, input, textarea, .modal-panel, .envelope-shell, .date-banner')) {
           return;
         }
         plantCanvasBloom(event.clientX, event.clientY);
@@ -1666,15 +1763,20 @@
       // =====================================================
       // PERSONALIZE MODAL
       // =====================================================
-      function openModal() {
+      function openModal(focusId) {
         customizeModal.classList.add('is-open');
+        if (focusId) {
+          const el = document.getElementById(focusId);
+          if (el) el.focus();
+        }
       }
 
       function closeModal() {
         customizeModal.classList.remove('is-open');
       }
 
-      btnCustomize.addEventListener('click', openModal);
+      btnCustomize.addEventListener('click', function () { openModal(); });
+      dateBanner.addEventListener('click', function () { openModal('input-date'); });
       modalClose.addEventListener('click', closeModal);
       customizeModal.addEventListener('click', function (event) {
         if (event.target === customizeModal) {
@@ -1686,6 +1788,7 @@
         event.preventDefault();
         state.to = document.getElementById('input-to').value.trim() || defaults.to;
         state.from = document.getElementById('input-from').value.trim() || defaults.from;
+        state.date = document.getElementById('input-date').value || defaults.date;
         state.time = document.getElementById('input-time').value.trim() || defaults.time;
         state.place = document.getElementById('input-place').value.trim() || defaults.place;
         state.note = document.getElementById('input-note').value.trim() || defaults.note;
@@ -1698,6 +1801,7 @@
         const nextUrl = new URL(window.location.href);
         nextUrl.searchParams.set('to', document.getElementById('input-to').value.trim() || defaults.to);
         nextUrl.searchParams.set('from', document.getElementById('input-from').value.trim() || defaults.from);
+        nextUrl.searchParams.set('date', document.getElementById('input-date').value || defaults.date);
         nextUrl.searchParams.set('time', document.getElementById('input-time').value.trim() || defaults.time);
         nextUrl.searchParams.set('place', document.getElementById('input-place').value.trim() || defaults.place);
         nextUrl.searchParams.set('note', document.getElementById('input-note').value.trim() || defaults.note);
